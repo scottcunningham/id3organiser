@@ -1,20 +1,22 @@
-#import id3
-#import os.path
+import eyed3
+import string
 
 class MusicFile:
 
     def __init__(self, filepath):
         self.filepath = filepath
+        self.audiofile = eyed3.load(filepath)
         self.addId3Tags()
-
+    
     def addId3Tags(self):
         # For title, artist, album etc we will replace ' ' with '_' etc
-        self.trackNo = 133
-        self.title = "Title"
-        self.artist = "Artist_Person"
-        self.album = "My_Album_(Self_Titled)"
-        self.albumArtist = "Artist_Person"
-        self.year = 1937
+        
+        self.trackNo = self.audiofile.tag.track_num[0] # track_num returns a tuple (songNo, songNoOf)
+        self.title =  string.replace(self.audiofile.tag.title, ' ', '_')
+        self.artist = string.replace(self.audiofile.tag.artist, ' ', '_')
+        self.album = string.replace(self.audiofile.tag.album, ' ', '_') 
+        # Broken, no explanation why. :(
+        self.year = self.audiofile.tag.release_date 
 
         self.format = ".mp3" # ???!
 
@@ -27,5 +29,11 @@ class MusicFile:
         if basepath[len(basepath)-1] == '/':
             separator = ''
         else: separator = '/'
-        return basepath + separator + self.artist + "/" + self.album + "_" + str(self.year) + "/" + str(self.trackNo) + "_" + self.title + self.format
-
+        return basepath + separator + self.artist + "/" + self.album + "_(" + str(self.year) + ")/" + str(self.trackNo) + "_-_" + self.title + self.format
+    
+    def dump(self):
+        print "Track #: ", self.trackNo
+        print "Title: ", self.title
+        print "Artist: ", self.artist
+        print "Album: ", self.album
+        print "Year: ", self.year

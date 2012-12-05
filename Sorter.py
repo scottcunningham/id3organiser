@@ -25,10 +25,16 @@ def findMusic(dir):
 basedir = "/home/scott/Music"
 
 # Get a list of files
-musicfiles = findMusic(basedir)
+#musicfiles = findMusic(basedir)
 
+mp3 = MusicFile("test.mp3")
+mp3.dump()
+print mp3.getNewPath("/")
+
+'''
 for file in musicfiles:
     # We'll want to move each file from current dir to dest dir
     # Just print it for now
     print "Old path: ", file.filepath
     print "New path: ", file.getNewPath(basedir)
+'''
