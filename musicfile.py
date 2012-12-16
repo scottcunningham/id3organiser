@@ -7,9 +7,9 @@ class MusicFile:
     def __init__(self, filepath):
         self.filepath = filepath
         self.audiofile = eyed3.load(filepath)
-        self.addId3Tags()
+        self.add_id3_tags()
 
-    def addId3Tags(self):
+    def add_id3_tags(self):
         # For title, artist, album etc we will replace ' ' with '_' etc
         self.trackNo = self.audiofile.tag.track_num[0] # track_num returns a tuple (songNo, songNoOf)
         self.title =  string.replace(self.audiofile.tag.title, ' ', '_')
@@ -23,10 +23,10 @@ class MusicFile:
         self.trackstr = str(self.trackNo) + "_-_" + self.title + "." + self.format
         return None
 
-    def getOldPath(self):
+    def get_old_path(self):
         return self.filepath
 
-    def getNewPath(self, basepath):
+    def get_new_path(self, basepath):
         return (os.path.join(basepath, self.artist, self.albumstr, self.trackstr))
     
     def dump(self):
