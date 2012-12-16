@@ -25,24 +25,19 @@ def findMusic(dir):
 
     return files
 
-basedir = "/media/windows/Users/Scott/Music/The Cure"
-destdir = "/home/scott/mus"
+def sort(basedir, destdir, debug):
+    # Get a list of files
+    musicfiles = findMusic(basedir)
 
-debug = False
+    if not os.path.exists(destdir):
+        print "Destination dir does not exist - creating it"
+        os.makedirs(destdir)
 
-# Get a list of files
-musicfiles = findMusic(basedir)
+    for file in musicfiles:
+        print "Old path:", file.filepath
+        print "New path:", file.getNewPath(destdir)
+        if not os.path.exists(os.path.join(destdir, file.artist, file.albumstr)):
+            os.makedirs(os.path.join(destdir, file.artist, file.albumstr))
+        if not debug:
+            shutil.copy2(file.filepath, file.getNewPath(destdir))
 
-if not os.path.exists(destdir):
-    print "Destination dir does not exist - creating it"
-    os.makedirs(destdir)
-
-for file in musicfiles:
-    print "Old path: ", file.filepath
-    print "New path: ", file.getNewPath(destdir)
-    if not os.path.exists(os.path.join(destdir, file.artist)):
-        os.makedirs(os.path.join(destdir, file.artist))
-    if not os.path.exists(os.path.join(destdir, file.artist, file.albumstr)):
-        os.makedirs(os.path.join(destdir, file.artist, file.albumstr))
-    if not debug:
-        shutil.copy2(file.filepath, file.getNewPath(destdir))
