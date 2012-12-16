@@ -1,5 +1,6 @@
 import eyed3
 import string
+import os.path
 
 class MusicFile:
 
@@ -15,21 +16,18 @@ class MusicFile:
         self.artist = string.replace(self.audiofile.tag.artist, ' ', '_')
         self.album = string.replace(self.audiofile.tag.album, ' ', '_') 
         self.year = self.audiofile.tag.recording_date
-        
-        self.albumstr = self.album + "_(" + str(self.year) + ")"
+ 
         self.format = self.filepath.split('.')[-1:][0]
-
+       
+        self.albumstr = self.album + "_(" + str(self.year) + ")"
+        self.trackstr = str(self.trackNo) + "_-_" + self.title + "." + self.format
         return None
 
     def getOldPath(self):
         return self.filepath
 
     def getNewPath(self, basepath):
-        if basepath[len(basepath)-1] == '/':
-            separator = ''
-        else: separator = '/'
-        return (basepath + separator + self.artist + "/" + self.album + "_(" +
-                str(self.year) + ")/" + str(self.trackNo) + "_-_" + self.title + "." + self.format)
+        return (os.path.join(basepath, self.artist, self.albumstr, self.trackstr))
     
     def dump(self):
         print "Track #:", self.trackNo

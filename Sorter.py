@@ -19,7 +19,7 @@ def findMusic(dir):
             try:
                 files.append(MusicFile(dir + "/" + filename))
             except: 
-                print "Not a music file -", dir + "/" + filename
+                print "Invalid tags or not a music file -", dir + "/" + filename
         else:
             print "Not a file or directory:", dir + "/" + filename
 
@@ -28,14 +28,21 @@ def findMusic(dir):
 basedir = "/media/windows/Users/Scott/Music/The Cure"
 destdir = "/home/scott/mus"
 
+debug = False
+
 # Get a list of files
 musicfiles = findMusic(basedir)
+
+if not os.path.exists(destdir):
+    print "Destination dir does not exist - creating it"
+    os.makedirs(destdir)
 
 for file in musicfiles:
     print "Old path: ", file.filepath
     print "New path: ", file.getNewPath(destdir)
-    if not os.path.exists(destdir + '/' + file.artist):
-        os.makedirs(destdir + '/' + file.artist)
-    if not os.path.exists(destdir + '/' + '/' + file.artist + '/' + file.albumstr):
-        os.makedirs(destdir + '/' + file.artist + '/' + file.albumstr)
-    shutil.copy2(file.filepath, file.getNewPath(destdir))
+    if not os.path.exists(os.path.join(destdir, file.artist)):
+        os.makedirs(os.path.join(destdir, file.artist))
+    if not os.path.exists(os.path.join(destdir, file.artist, file.albumstr)):
+        os.makedirs(os.path.join(destdir, file.artist, file.albumstr))
+    if not debug:
+        shutil.copy2(file.filepath, file.getNewPath(destdir))
