@@ -7,11 +7,11 @@ from optparse import OptionParser
 parser = OptionParser()
 parser.add_option("-s", "--source", action="store", type="str", dest="src",
                   help="Source directory")
-parser.add_option("-d", "--destination", action="store", type="str", 
+parser.add_option("-d", "--destination", action="store", type="str",
                   dest="dest", help="Destination directory")
 parser.add_option("-q", "--quiet", action="store_true", dest="quiet",
                   default=False, help="Don't print status messages to stdout")
-parser.add_option("-x", "--debug", action="store_true", dest="debug", 
+parser.add_option("-x", "--debug", action="store_true", dest="debug",
                   default=False, help=
                   "Do a debug run (simulate without copying files)")
 

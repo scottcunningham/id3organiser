@@ -3,6 +3,7 @@ import os
 import os.path
 import shutil
 
+
 def find_music(dir):
     print "Searching in", dir
 
@@ -18,12 +19,14 @@ def find_music(dir):
             print "Adding", filename
             try:
                 files.append(MusicFile(dir + "/" + filename))
-            except: 
-                print "Invalid tags or not a music file -", dir + "/" + filename
+            except:
+                print "Invalid tags or not a music file:", \
+                    os.path.join(dir, filename)
         else:
             print "Not a file or directory:", dir + "/" + filename
 
     return files
+
 
 def sort(basedir, destdir, debug, quiet):
     # Get a list of files
@@ -39,6 +42,7 @@ def sort(basedir, destdir, debug, quiet):
             print "Old path:", file.filepath
             print "New path:", file.get_new_path(destdir)
         if not debug:
-            if not os.path.exists(os.path.join(destdir, file.artist, file.albumstr)):
+            if not os.path.exists(os.path.join(destdir, file.artist,
+                                               file.albumstr)):
                 os.makedirs(os.path.join(destdir, file.artist, file.albumstr))
             shutil.copy2(file.filepath, file.get_new_path(destdir))
