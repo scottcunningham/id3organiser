@@ -4,7 +4,6 @@ import os.path
 
 
 class MusicFile:
-
     def __init__(self, filepath):
         self.filepath = filepath
         self.audiofile = eyed3.load(filepath)
