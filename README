@@ -1,8 +1,0 @@
-id3reorganiser is a tool to clean up your music folder
-
-It recreates the directory structure of your music folder in the following format:
-$ARTIST/$ALBUM_($YEAR)/#TRACK_$TRACKNAME.$EXT
-
-Requires eyeD3 from pip (or similar). 
-Don't bother with your distro's repo version, any that I've tried are out of date
-or just don't work.
